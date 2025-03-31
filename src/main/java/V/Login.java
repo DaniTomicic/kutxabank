@@ -61,7 +61,21 @@ public class Login extends JDialog {
     private void onOK() {
         String dni = tfDNI.getText();
         String clave = tfPassword.getText();
-        usuarioController.read(dni,clave);
+        //validar usuario a DAO
+
+        Usuario u = usuarioController.read(dni,clave);
+        if (u != null) {
+            if (clave.equals(u.getClave())){
+                PanelUsuario panelUsuario = new PanelUsuario(usuarioController);
+                panelUsuario.setVisible(true);
+
+            }else {
+                JOptionPane.showMessageDialog(this,"Contraseña incorrecta!");
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Usuario no encontrado");
+
+        }
         dispose();
     }
 

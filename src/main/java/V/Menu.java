@@ -24,6 +24,7 @@ public class Menu extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 Login login = new Login(usuarioController);
                 login.setVisible(true);
+                dispose();
             }
         });
     }
