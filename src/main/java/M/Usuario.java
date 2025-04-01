@@ -8,8 +8,6 @@ public class Usuario {
     private String nombre;
     private List<Cuenta> cuentas;
 
-
-
     public Usuario(String dni, String clave) {
         this.dni = dni;
         this.clave = clave;
@@ -43,8 +41,8 @@ public class Usuario {
         return cuentas;
     }
 
-    public void setCuentas(Cuenta cuenta) {
-        this.cuentas.add(cuenta);
+    public void setCuentas(List<Cuenta> cuentas) {
+         this.cuentas = cuentas;
     }
     @Override
     public String toString() {

@@ -1,20 +1,21 @@
 package M;
 
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Cuenta {
-    String numCuenta;
-    String tipoMovimiento;
-    float saldo;
-    Set<Usuario> usuarios;
+    private String numCuenta;
+    private String tipoMovimiento;
+    private float saldo;
+    private List<String> movimientos;
+
 
     public Cuenta(String numCuenta, String tipoMovimiento, float saldo) {
         this.numCuenta = numCuenta;
         this.tipoMovimiento = tipoMovimiento;
         this.saldo = saldo;
-        this.usuarios = new HashSet<>() {
+        this.movimientos = new ArrayList<>() {
         };
     }
 
@@ -44,12 +45,12 @@ public class Cuenta {
         this.saldo = saldo;
     }
 
-    public Set<Usuario> getUsuarios() {
-        return usuarios;
+    public List<String> getMovimientos() {
+        return movimientos;
     }
 
-    public void setUsuarios(Usuario usuarios) {
-        this.usuarios.add(usuarios);
+    public void setMovimiento(String movimiento) {
+        this.movimientos.add(movimiento);
     }
 
     @Override

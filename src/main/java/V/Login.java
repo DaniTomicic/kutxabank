@@ -1,5 +1,6 @@
 package V;
 
+import C.CuentaController;
 import C.UsuarioController;
 import M.Usuario;
 
@@ -16,14 +17,16 @@ public class Login extends JDialog {
     private JTextField tfPassword;
     private JPanel pNumero;
     private final UsuarioController usuarioController;
+    private final CuentaController cuentaController;
 
-    public Login(UsuarioController usuarioController) {
+    public Login(UsuarioController usuarioController, CuentaController cuentaController) {
         setTitle("Login");
         setSize(400, 500);
         setModal(true);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.usuarioController = usuarioController;
+        this.cuentaController = cuentaController;
 
         // Panel principal con BorderLayout
         pPrincipal = new JPanel(new BorderLayout());
@@ -65,16 +68,15 @@ public class Login extends JDialog {
 
         Usuario u = usuarioController.read(dni,clave);
         if (u != null) {
+            u.setCuentas(cuentaController.readCuentas(u.getDni()));
             if (clave.equals(u.getClave())){
                 PanelUsuario panelUsuario = new PanelUsuario(usuarioController);
                 panelUsuario.setVisible(true);
-
             }else {
                 JOptionPane.showMessageDialog(this,"Contraseña incorrecta!");
             }
         }else{
             JOptionPane.showMessageDialog(this, "Usuario no encontrado");
-
         }
         dispose();
     }

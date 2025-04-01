@@ -1,11 +1,11 @@
 package M;
 
 public class Movimiento {
-    String codigo;
-    String descripcion;
-    String fecha;
-    float importe;
-    Cuenta cuenta;
+    private String codigo;
+    private String descripcion;
+    private String fecha;
+    private float importe;
+    private Cuenta cuenta;
 
     public Movimiento(String codigo, String descripcion, String fecha, float importe, Cuenta cuenta) {
         this.codigo = codigo;

@@ -1,6 +1,8 @@
 package V;
 
+import C.CuentaController;
 import C.UsuarioController;
+import M.Cuenta;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -12,7 +14,7 @@ public class Menu extends JFrame {
 
 
 
-    public Menu(UsuarioController usuarioController) {
+    public Menu(UsuarioController usuarioController, CuentaController cuentaController) {
         add(pPrincipal);
         setSize(500, 500);
         setLocationRelativeTo(null);
@@ -22,7 +24,7 @@ public class Menu extends JFrame {
         bAcceso.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Login login = new Login(usuarioController);
+                Login login = new Login(usuarioController,cuentaController);
                 login.setVisible(true);
                 dispose();
             }

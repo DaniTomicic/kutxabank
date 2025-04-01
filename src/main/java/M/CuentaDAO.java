@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CuentaDAO {
     Connection con;
@@ -30,4 +32,23 @@ public class CuentaDAO {
         }
         return cuenta;
     }
+
+    public List<Cuenta> readCuentas(String nif) {
+        sql = "SELECT num_cuenta FROM cuentas_clientes WHERE dni = ?";
+        List<Cuenta> cuentas = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, nif);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Cuenta cuenta = new Cuenta();
+                cuenta.setNumCuenta(rs.getString("num_cuenta"));
+                cuentas.add(cuenta);
+            }
+        }catch (SQLException e){
+            System.out.println("ERROR EN READ CUENTAS:" +e.getMessage());
+        }
+        return cuentas;
+    }
+
 }

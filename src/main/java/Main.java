@@ -16,6 +16,6 @@ public class Main {
         CuentaController cuentaController = new CuentaController(cDAO);
         MovimientoController movimientoController = new MovimientoController(mDAO);
         UsuarioController usuarioController = new UsuarioController(uDAO);
-        Menu menu = new Menu(usuarioController);
+        Menu menu = new Menu(usuarioController,cuentaController);
     }
 }
