@@ -15,6 +15,8 @@ public class UsuarioController {
         usuario = usuarioDAO.read(dni,clave);
         return usuario;
     }
-
+    public Usuario getUsuario(){
+        return usuario;
+    }
 
 }

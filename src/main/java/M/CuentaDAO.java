@@ -34,7 +34,7 @@ public class CuentaDAO {
     }
 
     public List<Cuenta> readCuentas(String nif) {
-        sql = "SELECT num_cuenta FROM cuentas_clientes WHERE dni = ?";
+        sql = "SELECT c.num_cuenta, c.saldo FROM cuentas c, cuentas_clientes WHERE dni = ? AND num_cuenta = c.num_cuenta";
         List<Cuenta> cuentas = new ArrayList<>();
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -43,6 +43,7 @@ public class CuentaDAO {
             while (rs.next()) {
                 Cuenta cuenta = new Cuenta();
                 cuenta.setNumCuenta(rs.getString("num_cuenta"));
+                cuenta.setSaldo(rs.getFloat("saldo"));
                 cuentas.add(cuenta);
             }
         }catch (SQLException e){

@@ -1,9 +1,9 @@
 package V;
 
-import C.CuentaController;
-import C.UsuarioController;
-import M.Usuario;
+import C.ModeloController;
+import C.VistaController;
 
+import javax.lang.model.element.ModuleElement;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -16,17 +16,15 @@ public class Login extends JDialog {
     private JTextField tfDNI;
     private JTextField tfPassword;
     private JPanel pNumero;
-    private final UsuarioController usuarioController;
-    private final CuentaController cuentaController;
+    private VistaController vistaController;
 
-    public Login(UsuarioController usuarioController, CuentaController cuentaController) {
+    public Login(VistaController vistaController) {
         setTitle("Login");
         setSize(400, 500);
         setModal(true);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.usuarioController = usuarioController;
-        this.cuentaController = cuentaController;
+        this.vistaController = vistaController;
 
         // Panel principal con BorderLayout
         pPrincipal = new JPanel(new BorderLayout());
@@ -66,19 +64,13 @@ public class Login extends JDialog {
         String clave = tfPassword.getText();
         //validar usuario a DAO
 
-        Usuario u = usuarioController.read(dni,clave);
-        if (u != null) {
-            u.setCuentas(cuentaController.readCuentas(u.getDni()));
-            if (clave.equals(u.getClave())){
-                PanelUsuario panelUsuario = new PanelUsuario(usuarioController);
-                panelUsuario.setVisible(true);
-            }else {
-                JOptionPane.showMessageDialog(this,"Contraseña incorrecta!");
-            }
-        }else{
+        if (vistaController.getUsuario(dni,clave)==null){
             JOptionPane.showMessageDialog(this, "Usuario no encontrado");
+        }else {
+            PanelUsuario panelUsuario = new PanelUsuario(vistaController,dni,clave);
+            panelUsuario.setVisible(true);
+            dispose();
         }
-        dispose();
     }
 
     private void generarNumeros() {
