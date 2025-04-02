@@ -13,13 +13,12 @@ public class UsuarioDAO {
         this.con = bd.getConnection();
     }
 
-    public Usuario read(String dni,String clave) {
-        sql = "select * from usuarios where dni=? and clave=?";
+    public Usuario read(String dni) {
+        sql = "select * from usuarios where dni=?";
         Usuario u = new Usuario();
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, dni);
-            ps.setString(2, clave);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 u.setDni(rs.getString("dni"));

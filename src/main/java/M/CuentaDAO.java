@@ -34,7 +34,7 @@ public class CuentaDAO {
     }
 
     public List<Cuenta> readCuentas(String nif) {
-        sql = "SELECT c.num_cuenta, c.saldo FROM cuentas c, cuentas_clientes WHERE dni = ? AND num_cuenta = c.num_cuenta";
+        sql = "SELECT c.num_cuenta, c.saldo FROM cuentas c, cuentas_clientes cc WHERE cc.dni = ? AND cc.num_cuenta = c.num_cuenta";
         List<Cuenta> cuentas = new ArrayList<>();
         try {
             PreparedStatement ps = con.prepareStatement(sql);

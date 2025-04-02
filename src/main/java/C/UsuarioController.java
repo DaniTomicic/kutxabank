@@ -11,8 +11,8 @@ public class UsuarioController {
         this.usuarioDAO = uDAO;
     }
 
-    public Usuario read(String dni, String clave){
-        usuario = usuarioDAO.read(dni,clave);
+    public Usuario read(String dni){
+        usuario = usuarioDAO.read(dni);
         return usuario;
     }
     public Usuario getUsuario(){

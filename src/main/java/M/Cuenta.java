@@ -8,7 +8,7 @@ public class Cuenta {
     private String numCuenta;
     private String tipoMovimiento;
     private float saldo;
-    private List<String> movimientos;
+    private List<Movimiento> movimientos;
 
 
     public Cuenta(String numCuenta, String tipoMovimiento, float saldo) {
@@ -45,12 +45,12 @@ public class Cuenta {
         this.saldo = saldo;
     }
 
-    public List<String> getMovimientos() {
+    public List<Movimiento> getMovimientos() {
         return movimientos;
     }
 
-    public void setMovimiento(String movimiento) {
-        this.movimientos.add(movimiento);
+    public void setMovimiento(List<Movimiento> movimientos) {
+        this.movimientos = movimientos;
     }
 
     @Override

@@ -13,6 +13,7 @@ public class ModeloController {
     private MovimientoDAO mDAO;
     private UsuarioDAO uDAO;
     private VistaController vistaController;
+    private Usuario usuario;
 
     public ModeloController() {
         try {
@@ -37,8 +38,22 @@ public class ModeloController {
         return vistaController;
     }
 
-    public Usuario getUsuario(String dni, String clave) {
-        return usuarioController.read(dni, clave);
+    public boolean getUsuario(String dni) {
+        usuario = usuarioController.read(dni);
+        if (usuario != null) {
+            usuario.setCuentas(cuentaController.readCuentas(usuario.getDni()));
+            //obtengo cuentas
+
+            for (Cuenta cuenta : usuario.getCuentas()) {
+                cuenta.setMovimiento(movimientoController.obtenerMovs(cuenta.getNumCuenta()));
+                //por cada cuenta, los movimientos
+            }
+        }
+        return usuario != null;
+    }
+
+    public boolean getClave(String clave) {
+        return usuario.getClave().equals(clave);
     }
 
     public Usuario getCliente() {

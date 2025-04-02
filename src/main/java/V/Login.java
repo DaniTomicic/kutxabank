@@ -1,9 +1,7 @@
 package V;
 
-import C.ModeloController;
 import C.VistaController;
 
-import javax.lang.model.element.ModuleElement;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -24,6 +22,7 @@ public class Login extends JDialog {
         setModal(true);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
         this.vistaController = vistaController;
 
         // Panel principal con BorderLayout
@@ -64,12 +63,17 @@ public class Login extends JDialog {
         String clave = tfPassword.getText();
         //validar usuario a DAO
 
-        if (vistaController.getUsuario(dni,clave)==null){
-            JOptionPane.showMessageDialog(this, "Usuario no encontrado");
+        if (vistaController.getUsuario(dni)){
+            if (vistaController.getClave(clave)){
+                PanelUsuario panelUsuario = new PanelUsuario(vistaController);
+                panelUsuario.setVisible(true);
+                dispose();
+            }else {
+                JOptionPane.showMessageDialog(this, "Usuario o Clave incorrecto");
+                tfPassword.setText("");
+            }
         }else {
-            PanelUsuario panelUsuario = new PanelUsuario(vistaController,dni,clave);
-            panelUsuario.setVisible(true);
-            dispose();
+            JOptionPane.showMessageDialog(this, "Usuario no encontrado");
         }
     }
 
