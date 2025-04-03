@@ -9,22 +9,20 @@ public class ModeloController {
     private CuentaController cuentaController;
     private MovimientoController movimientoController;
     private UsuarioController usuarioController;
-    private CuentaDAO cDAO;
-    private MovimientoDAO mDAO;
-    private UsuarioDAO uDAO;
     private VistaController vistaController;
+
     private Usuario usuario;
 
     public ModeloController() {
         try {
             BD bd = new BD();
-            cDAO = new CuentaDAO(bd);
+            CuentaDAO cDAO = new CuentaDAO(bd);
             cuentaController = new CuentaController(cDAO);
 
-            mDAO = new MovimientoDAO(bd);
+            MovimientoDAO mDAO = new MovimientoDAO(bd);
             movimientoController = new MovimientoController(mDAO);
 
-            uDAO = new UsuarioDAO(bd);
+            UsuarioDAO uDAO = new UsuarioDAO(bd);
             usuarioController = new UsuarioController(uDAO);
         }catch (Exception e) {
             System.out.println("ERROR EN MODELO CONTROLLER: " + e.getMessage());
@@ -34,11 +32,8 @@ public class ModeloController {
     public void setVista(VistaController vistaController) {
         this.vistaController = vistaController;
     }
-    public VistaController getVista() {
-        return vistaController;
-    }
 
-    public boolean getUsuario(String dni) {
+    public Usuario getUsuario(String dni) {
         usuario = usuarioController.read(dni);
         if (usuario != null) {
             usuario.setCuentas(cuentaController.readCuentas(usuario.getDni()));
@@ -49,7 +44,7 @@ public class ModeloController {
                 //por cada cuenta, los movimientos
             }
         }
-        return usuario != null;
+        return usuario;
     }
 
     public boolean getClave(String clave) {
@@ -60,7 +55,4 @@ public class ModeloController {
         return usuarioController.getUsuario();
     }
 
-    public List<Cuenta> getCuentas(Usuario usuario) {
-        return cuentaController.readCuentas(usuario.getDni());
-    }
 }

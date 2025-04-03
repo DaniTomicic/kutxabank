@@ -6,7 +6,7 @@ import M.MovimientoDAO;
 import java.util.List;
 
 public class MovimientoController {
-    private MovimientoDAO mdao;
+    private final MovimientoDAO mdao;
     public MovimientoController(MovimientoDAO mDAO) {
         this.mdao = mDAO;
     }

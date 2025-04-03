@@ -3,94 +3,143 @@ package V;
 import C.VistaController;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Login extends JDialog {
-    private JPanel contentPane;
+public class Login extends JFrame {
+
     private JPanel pPrincipal;
-    private JTextField tfDNI;
-    private JTextField tfPassword;
-    private JPanel pNumero;
-    private VistaController vistaController;
+    private JPanel pDatos;
+    private JPanel pNumeros;
+    private JButton b10;
+    private JButton b9;
+    private JButton b8;
+    private JButton b7;
+    private JButton b6;
+    private JButton b1;
+    private JButton b2;
+    private JButton b3;
+    private JButton b5;
+    private JButton b4;
+    private JButton bAcceder;
+    private JTextField tfUsuario;
+    private JTextField tfClave;
+    String clave = "";
 
     public Login(VistaController vistaController) {
-        setTitle("Login");
-        setSize(400, 500);
-        setModal(true);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
-        this.vistaController = vistaController;
-
-        // Panel principal con BorderLayout
-        pPrincipal = new JPanel(new BorderLayout());
-        setContentPane(pPrincipal);
-
-        // Panel de campos de texto
-        JPanel pCampos = new JPanel(new GridLayout(2, 2, 5, 5));
-        tfDNI = new JTextField();
-        tfPassword = new JPasswordField();
-        pCampos.add(new JLabel("NIF:"));
-        pCampos.add(tfDNI);
-        pCampos.add(new JLabel("Clave:"));
-        pCampos.add(tfPassword);
-        pPrincipal.add(pCampos, BorderLayout.NORTH);
-
-        // Panel para los números
-        pNumero = new JPanel(new GridLayout(3, 3, 5, 5));
         generarNumeros();
-        pPrincipal.add(pNumero, BorderLayout.CENTER);
+        setContentPane(pPrincipal);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(400,400);
+        setTitle("Login");
+        setVisible(true);
 
-        // Panel de botones
-        JPanel pBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        JButton okButton = new JButton("Acceder");
-        pBotones.add(okButton);
-        pPrincipal.add(pBotones, BorderLayout.SOUTH);
-
-        //teclado
-        tfDNI.addActionListener(e -> tfPassword.requestFocus());
-        tfPassword.addActionListener(e -> onOK());
-
-        //boton
-        okButton.addActionListener(e -> onOK());
-    }
-
-    private void onOK() {
-        String dni = tfDNI.getText();
-        String clave = tfPassword.getText();
-        //validar usuario a DAO
-
-        if (vistaController.getUsuario(dni)){
-            if (vistaController.getClave(clave)){
-                PanelUsuario panelUsuario = new PanelUsuario(vistaController);
-                panelUsuario.setVisible(true);
-                dispose();
-            }else {
-                JOptionPane.showMessageDialog(this, "Usuario o Clave incorrecto");
-                tfPassword.setText("");
+        //inicializacion y ActionListeer de botones
+        b1.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               ponerNumero(b1);
+           }
+        });
+        b2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ponerNumero(b2);
             }
-        }else {
-            JOptionPane.showMessageDialog(this, "Usuario no encontrado");
-        }
+        });
+        b3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ponerNumero(b3);
+            }
+        });
+        b4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ponerNumero(b4);
+            }
+        });
+        b5.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ponerNumero(b5);
+            }
+        });
+        b6.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ponerNumero(b6);
+            }
+        });
+        b7.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ponerNumero(b7);
+            }
+        });
+        b8.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ponerNumero(b8);
+            }
+        });
+        b9.addActionListener(new ActionListener() {
+           @Override
+            public void actionPerformed(ActionEvent e) {
+               ponerNumero(b9);
+           }
+        });
+        b10.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               ponerNumero(b10);
+           }
+        });
+
+        tfUsuario.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                super.focusGained(e);
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+                if (vistaController.buscarUsuario(tfUsuario.getText().trim())){
+                    if (clave.trim().length() > 6){
+                        JOptionPane.showMessageDialog(null, "La clave solo tiene 6 caract.");
+                    }else {
+                        vistaController.comprobarContrasenna(clave);
+                    }
+                }else {
+                    JOptionPane.showMessageDialog(null, "Usuario no encontrado");
+                    tfUsuario.requestFocus();
+                    tfUsuario.setText("");
+                }
+            }
+        });
     }
 
     private void generarNumeros() {
-        pNumero.removeAll();
         List<String> numeros = new ArrayList<>();
-
-        for (int i = 1; i <= 9; i++) {
+        for (int i = 0; i <= 9; i++) {
             numeros.add(String.valueOf(i));
         }
         Collections.shuffle(numeros);
 
-        for (String numero : numeros) {
-            JButton button = new JButton(numero);
-            button.addActionListener(e -> tfPassword.setText(tfPassword.getText() + numero));
-            pNumero.add(button);
+        JButton[] botones = {b1, b2, b3, b4, b5, b6, b7, b8, b9, b10};
+        for (int i = 0; i < botones.length; i++) {
+            String numero = numeros.get(i); // Variable final para usar en el listener
+            botones[i].setText(numero);
         }
-        pNumero.revalidate();pNumero.repaint();
+    }
+    public void ponerNumero(JButton boton) {
+        tfClave.setText(tfClave.getText()+"*");
+        clave+=boton.getText();
     }
 }
