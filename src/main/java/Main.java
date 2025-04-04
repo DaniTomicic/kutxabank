@@ -5,7 +5,6 @@ public class Main {
     public static void declararVar() {
         ModeloController modeloController = new ModeloController();
         VistaController vistaController = new VistaController(modeloController);
-
         modeloController.setVista(vistaController);
     }
 }

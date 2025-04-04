@@ -15,7 +15,7 @@ public class PestanaPrincipal extends JFrame{
         setContentPane(pPrincipal);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400,400);
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(this.getParent());
 
         this.vistaController = vistaController;
 

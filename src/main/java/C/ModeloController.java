@@ -3,13 +3,11 @@ package C;
 import BD.BD;
 import M.*;
 
-import java.util.List;
 
 public class ModeloController {
     private CuentaController cuentaController;
     private MovimientoController movimientoController;
     private UsuarioController usuarioController;
-    private VistaController vistaController;
 
     private Usuario usuario;
 
@@ -30,7 +28,6 @@ public class ModeloController {
     }
 
     public void setVista(VistaController vistaController) {
-        this.vistaController = vistaController;
     }
 
     public Usuario getUsuario(String dni) {

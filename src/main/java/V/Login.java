@@ -29,6 +29,7 @@ public class Login extends JFrame {
     private JButton bAcceder;
     private JTextField tfUsuario;
     private JTextField tfClave;
+    private VistaController vistaController;
     String clave = "";
 
     public Login(VistaController vistaController) {
@@ -36,8 +37,9 @@ public class Login extends JFrame {
         setContentPane(pPrincipal);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(400,400);
-        setTitle("Login");
+        setLocationRelativeTo(this.getParent());
         setVisible(true);
+        this.vistaController = vistaController;
 
         //inicializacion y ActionListeer de botones
         b1.addActionListener(new ActionListener() {
@@ -101,28 +103,28 @@ public class Login extends JFrame {
            }
         });
 
-        tfUsuario.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                super.focusGained(e);
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                super.focusLost(e);
-                if (vistaController.buscarUsuario(tfUsuario.getText().trim())){
-                    if (clave.trim().length() > 6){
-                        JOptionPane.showMessageDialog(null, "La clave solo tiene 6 caract.");
-                    }else {
-                        vistaController.comprobarContrasenna(clave);
-                    }
-                }else {
-                    JOptionPane.showMessageDialog(null, "Usuario no encontrado");
-                    tfUsuario.requestFocus();
-                    tfUsuario.setText("");
-                }
-            }
+        bAcceder.addActionListener(new ActionListener() {
+           @Override
+            public void actionPerformed(ActionEvent e) {
+               onOk();
+           }
         });
+
+    }
+    private void onOk(){
+        if (vistaController.buscarUsuario(tfUsuario.getText())){
+            //en caso de true, miramos password
+            if (vistaController.comprobarContrasenna(clave)){
+                //en caso de true, generamos el panel usuario
+                vistaController.setPanelCuentas();
+                this.dispose();
+            }else {
+                JOptionPane.showMessageDialog(this,"Contraseña incorrecta");
+                tfClave.setText("");
+            }
+        }else {
+            JOptionPane.showMessageDialog(this, "Usuario no encontrado");
+        }
     }
 
     private void generarNumeros() {
