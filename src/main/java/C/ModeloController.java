@@ -3,6 +3,8 @@ package C;
 import BD.BD;
 import M.*;
 
+import javax.swing.*;
+
 
 public class ModeloController {
     private CuentaController cuentaController;
@@ -10,7 +12,6 @@ public class ModeloController {
     private UsuarioController usuarioController;
 
     private Usuario usuario;
-
     public ModeloController() {
         try {
             BD bd = new BD();
@@ -42,6 +43,23 @@ public class ModeloController {
             }
         }
         return usuario;
+    }
+    public boolean hacerPago(String tfPago, String tfCuenta,int nCuenta){
+        //parsear importe a numero
+        double pago = Double.parseDouble(tfPago.trim());
+
+        if ( pago < getCliente().getCuentas().get(nCuenta).getSaldo()){
+            return cuentaController.hacerPago(String.valueOf(pago),usuario.getCuentas().get(nCuenta).getNumCuenta());
+        }else {
+            JOptionPane.showMessageDialog(null,
+                    "Fondos insuficientes. Saldo actual: " + cuentaController.read(tfCuenta).getSaldo(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
+    }
+    public void grabarPago(String pago, String cuentaDestino,int cuentaOrigen){
+        movimientoController.grabarPago(pago,cuentaDestino,usuario.getCuentas().get(cuentaOrigen).getNumCuenta());
     }
 
     public boolean getClave(String clave) {

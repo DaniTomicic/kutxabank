@@ -15,10 +15,24 @@ public class CuentaDAO {
     public CuentaDAO(BD bd) {
         con = bd.getConnection();
     }
+    public boolean updateSaldo(String pago,String numCuenta){
+        sql = "UPDATE cuentas SET saldo = saldo - ? where num_cuenta=?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, pago);
+            ps.setString(2, numCuenta);
+            ps.executeUpdate();
+            return true;
+
+        }catch (Exception e){
+            System.out.println("ERROR EN UPDATE PAGO: "+e.getMessage());
+        }
+        return false;
+    }
 
     public Cuenta read(String numCuenta) {
         Cuenta cuenta = new Cuenta();
-        sql = "select * from cuentas where num_cuenta = ?";
+        sql = "SELECT num_cuenta, saldo FROM cuentas WHERE num_cuenta = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, numCuenta);

@@ -49,6 +49,13 @@ public class PanelCuentas extends JFrame {
                 bMostrarCuentas.doClick();
             }
         });
+
+        mMovimientos.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               vistaController.setMovimientos(pMovimientos,pCuentas);
+           }
+        });
     }
     //para hacer un array con los JLabel e ir añadiendoles texto
 
